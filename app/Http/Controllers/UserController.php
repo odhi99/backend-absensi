@@ -14,6 +14,7 @@ class UserController extends Controller
         // search berdasarkan nama, pagination 10
         $users = User::where('name', 'like', '%', request('name'), '%')
             ->orderBy('id', 'desc') //desc yg terakhir di input akan paling atas
+            // ->orderBy('name', 'asc') //asc name berdasrkan urutan abjad
             ->paginate(10);
         return view('pages.users.index', compact('users'));
     }
