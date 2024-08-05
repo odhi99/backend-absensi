@@ -81,12 +81,14 @@
                                                 <td>{{ $user->role }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
-                                                        <a href='' class="btn btn-sm btn-info btn-icon">
+                                                        <a href='{{ route('user.edit', $user->id) }}'
+                                                            class="btn btn-sm btn-info btn-icon">
                                                             <i class="fas fa-edit"></i>
                                                             Edit
                                                         </a>
 
-                                                        <form action="" method="POST" class="ml-2">
+                                                        <form action="{{ route('user.destroy', $user->id) }}" method="POST"
+                                                            class="ml-2">
                                                             <input type="hidden" name="_method" value="DELETE" />
                                                             <input type="hidden" name="_token"
                                                                 value="{{ csrf_token() }}" />

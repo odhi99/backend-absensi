@@ -12,7 +12,7 @@ class UserController extends Controller
     public function index()
     {
         // search berdasarkan nama, pagination 10
-        $users = User::where('name', 'like', '%', request('name'), '%')
+        $users = User::where('name', 'like', '%' . request('name') . '%')
             ->orderBy('id', 'desc') //desc yg terakhir di input akan paling atas
             // ->orderBy('name', 'asc') //asc name berdasrkan urutan abjad
             ->paginate(10);
@@ -43,5 +43,44 @@ class UserController extends Controller
         ]);
 
         return redirect()->route('user.index')->with('success', 'User Berhasil Ditambahkan');
+    }
+
+    // edit
+    public function edit(User $user)
+    {
+        return view('pages.users.edit', compact('user'));
+    }
+
+    // update
+    public function update(Request $request, User $user)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+        ]);
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'role' => $request->role,
+        ]);
+
+        // if password fiiled (jika passwordnya di isi akan update juga)
+        if ($request->password) {
+            $user->update([
+                'password' => Hash::make($request->password),
+            ]);
+        }
+
+        return redirect()->route('user.index')->with('success', 'User Berhasil di Ubah');
+    }
+
+
+    // delete
+    public function destroy(User $user)
+    {
+        $user->delete();
+        return redirect()->route('user.index')->with('success', 'User Berhasil di Hapus');
     }
 }
