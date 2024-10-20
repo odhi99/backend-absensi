@@ -21,5 +21,17 @@ class DatabaseSeeder extends Seeder
             'email' => 'odhii9671@gmail.com',
             'password' => Hash::make('odi123'),
         ]);
+
+        // data dummy untuk company
+        \App\Models\Company::create([
+            'name' => 'PT. Rantemalio',
+            'email' => 'rantemalio@gmail.com',
+            'address' => 'Kompleks Bouvardia Jl.Bouvardia Cros No.8 Barombong, Kec. Tamalate, Kota Makassar, Sulawesi Selatan 90225',
+            'latitude' => '-5.140286943212265',
+            'longitude' => '119.4830788231449',
+            'radius_km' => '0.5',
+            'time_in' => '08:00',
+            'time_out' => '17:00',
+        ]);
     }
 }
