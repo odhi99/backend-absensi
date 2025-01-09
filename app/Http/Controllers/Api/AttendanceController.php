@@ -18,7 +18,7 @@ class AttendanceController extends Controller
             'longitude' => 'required',
         ]);
 
-        // save new attendance
+        // save absen baru
         $attendance = new Attendance;
         $attendance->user_id = $request->user()->id;
         $attendance->date = date('Y-m-d');
