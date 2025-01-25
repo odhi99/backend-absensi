@@ -91,11 +91,11 @@
 
                                                 <td>
                                                     <div class="d-flex justify-content-center">
-                                                        <a href='{{ route('attendances.edit', $attendance->id) }}'
+                                                        {{-- <a href='{{ route('attendances.edit', $attendance->id) }}'
                                                             class="btn btn-sm btn-info btn-icon">
                                                             <i class="fas fa-edit"></i>
                                                             Edit
-                                                        </a>
+                                                        </a> --}}
 
                                                         <form action="{{ route('attendances.destroy', $attendance->id) }}"
                                                             method="POST" class="ml-2">

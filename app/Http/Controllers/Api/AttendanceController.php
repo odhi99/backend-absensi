@@ -69,8 +69,11 @@ class AttendanceController extends Controller
         $attendence = Attendance::where('user_id', $request->user()->id)
             ->where('date', date('Y-m-d'))->first();
 
+        $isCheckout = $attendence ? $attendence->time_out : false;
+
         return response([
             'checkedin' => $attendence ? true : false,
+            'checkedout' => $isCheckout ? true : false,
         ], 200);
     }
 }

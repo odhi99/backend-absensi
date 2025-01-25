@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Permission;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Messaging\Notification;
+use Illuminate\Support\Facades\Log;
+
 
 class PermissionController extends Controller
 {
@@ -21,7 +26,6 @@ class PermissionController extends Controller
     // show
     public function show($id)
     {
-        // dd($id);
         $permission = Permission::with('user')->find($id);
         return view('pages.permission.show', compact('permission'));
     }
@@ -38,7 +42,39 @@ class PermissionController extends Controller
     {
         $permission = Permission::find($id);
         $permission->is_approved = $request->is_approved;
+        $str = $request->is_approved == 1 ? 'Disetujui' : 'Ditolak';
         $permission->save();
+
+        // Kirim notifikasi hanya jika pengguna memiliki token
+        $this->sendNotificationToUser($permission->user_id, 'Status Izin anda adalah ' . $str);
+
         return redirect()->route('permissions.index')->with('success', 'Permission telah di update');
+    }
+
+    public function sendNotificationToUser($userId, $message)
+    {
+        // Dapatkan user dan FCM token
+        $user = User::find($userId);
+
+        if (!$user || !$user->fcm_token) {
+            // Jika token tidak ada, beri tahu pengguna dengan cara lain
+            return redirect()->route('permissions.index')->with('error', "User dengan ID {$userId} tidak memiliki FCM token.");
+        }
+
+        $token = $user->fcm_token;
+
+        // Kirim notifikasi ke perangkat Android
+        $messaging = app('firebase.messaging');
+        $notification = Notification::create('Status Izin', $message);
+
+        try {
+            $message = CloudMessage::withTarget('token', $token)
+                ->withNotification($notification);
+
+            $messaging->send($message);
+        } catch (\Exception $e) {
+            // Tangani error tanpa menggunakan log
+            return redirect()->route('permissions.index')->with('error', "Gagal mengirim notifikasi: " . $e->getMessage());
+        }
     }
 }

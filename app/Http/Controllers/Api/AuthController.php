@@ -68,39 +68,41 @@ class AuthController extends Controller
     {
         // Validasi input
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'face_embedding' => 'required',
         ]);
 
-        // Dapatkan user dari request
+
         $user = $request->user();
+        // $image = $request->file('image');
+        $face_embedding = $request->face_embedding;
 
-        // Proses upload gambar
-        if ($request->hasFile('image')) {
-            // Simpan gambar di disk 'public'
-            $image = $request->file('image');
-            $path = $image->storeAs('images', $image->hashName(), 'public');
 
-            // Hapus gambar lama jika ada
-            if ($user->img_url) {
-                // Extract the file name from the existing URL and delete from storage
-                $oldImagePath = str_replace(url('storage/'), '', $user->img_url);
-                Storage::disk('public')->delete($oldImagePath);
-            }
-
-            // Simpan URL gambar ke database
-            $user->img_url = url('storage/images/' . $image->hashName());
-        }
-
-        // Simpan face embedding ke database
-        $user->face_embedding = $request->face_embedding;
-
-        // Simpan perubahan ke database
+        // save image
+        // $image->storeAs('images', $image->hashName(), 'public');
+        // $user->img_url = $image->hashName();
+        $user->face_embedding = $face_embedding;
         $user->save();
 
         return response([
             'message' => 'Profile updated',
             'user' => $user
+        ], 200);
+    }
+
+    //update fcm token
+    public function updateFcmToken(Request $request)
+    {
+        $request->validate([
+            'fcm_token' => 'required',
+        ]);
+
+        $user = $request->user();
+        $user->fcm_token = $request->fcm_token;
+        $user->save();
+
+        return response([
+            'message' => 'FCM token updated',
         ], 200);
     }
 }

@@ -28,6 +28,7 @@ class User extends Authenticatable
         'department',
         'face_embedding',
         'img_url',
+        'fcm_token',
     ];
 
     /**
