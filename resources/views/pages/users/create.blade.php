@@ -120,10 +120,6 @@
                                             checked="">
                                         <span class="selectgroup-button">Admin</span>
                                     </label>
-                                    {{-- <label class="selectgroup-item">
-                                        <input type="radio" name="role" value="finance" class="selectgroup-input">
-                                        <span class="selectgroup-button">Finance</span>
-                                    </label> --}}
                                     <label class="selectgroup-item">
                                         <input type="radio" name="role" value="karyawan" class="selectgroup-input">
                                         <span class="selectgroup-button">Karyawan</span>
