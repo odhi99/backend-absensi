@@ -19,6 +19,12 @@
                 </div>
             </div>
             <div class="section-body">
+
+                <div class="row">
+                    <div class="col-12">
+                        @include('layouts.alert')
+                    </div>
+                </div>
                 <h2 class="section-title">Edit Profil Perusahaan</h2>
                 <p class="section-lead">
                     Perbarui informasi tentang perusahaan Anda di halaman ini.

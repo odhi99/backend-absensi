@@ -77,4 +77,11 @@ class PermissionController extends Controller
             return redirect()->route('permissions.index')->with('error', "Gagal mengirim notifikasi: " . $e->getMessage());
         }
     }
+
+    // delete
+    public function destroy(Permission $permission)
+    {
+        $permission->delete();
+        return redirect()->route('permissions.index')->with('success', 'Data Permission Berhasil di Hapus');
+    }
 }

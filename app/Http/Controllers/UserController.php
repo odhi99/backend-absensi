@@ -44,6 +44,8 @@ class UserController extends Controller
             'department' => $request->department,
         ]);
 
+        // dd($request);
+
 
 
         return redirect()->route('user.index')->with('success', 'User Berhasil Ditambahkan');

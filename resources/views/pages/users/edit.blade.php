@@ -19,13 +19,13 @@
                 <h1>Advanced Forms</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                    <div class="breadcrumb-item"><a href="#">Forms</a></div>
+                    <div class="breadcrumb-item"><a href="#">Forms Edit</a></div>
                     <div class="breadcrumb-item">Users</div>
                 </div>
             </div>
 
             <div class="section-body">
-                <h2 class="section-title">Users</h2>
+                <h2 class="section-title">Edit Users</h2>
                 <div class="card">
                     <form action="{{ route('user.update', $user) }}" method="POST">
                         @csrf
@@ -118,15 +118,15 @@
                                             @if ($user->role == 'admin') checked @endif>
                                         <span class="selectgroup-button">Admin</span>
                                     </label>
-                                    <label class="selectgroup-item">
+                                    {{-- <label class="selectgroup-item">
                                         <input type="radio" name="role" value="finance" class="selectgroup-input"
                                             @if ($user->role == 'finance') checked @endif>
                                         <span class="selectgroup-button">Finance</span>
-                                    </label>
+                                    </label> --}}
                                     <label class="selectgroup-item">
-                                        <input type="radio" name="role" value="staff" class="selectgroup-input"
-                                            @if ($user->role == 'staff') checked @endif>
-                                        <span class="selectgroup-button">Staff</span>
+                                        <input type="radio" name="role" value="karyawan" class="selectgroup-input"
+                                            @if ($user->role == 'karyawan') checked @endif>
+                                        <span class="selectgroup-button">Karyawan</span>
                                     </label>
 
                                 </div>

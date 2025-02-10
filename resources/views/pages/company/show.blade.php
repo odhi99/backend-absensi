@@ -19,6 +19,17 @@
                 </div>
             </div>
             <div class="section-body">
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
+                @if (session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
                 <h2 class="section-title">Profil Perusahaan</h2>
                 <p class="section-lead">
                     Informasi tentang perusahaan Anda.
@@ -85,6 +96,16 @@
 @push('scripts')
     <!-- JS Libraries -->
     <script src="{{ asset('library/summernote/dist/summernote-bs4.js') }}"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            $(".alert .close").click(function() {
+                $(this).closest(".alert").fadeOut();
+            });
+        });
+    </script>
+
 
     <!-- Page Specific JS File -->
 @endpush
