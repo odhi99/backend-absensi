@@ -58,7 +58,7 @@ class FortifyServiceProvider extends ServiceProvider
             }
 
             if ($user->role !== 'admin') {
-                session()->flash('error', 'Hanya admin yang dapat mengakses halaman ini.');
+                session()->flash('error', 'Anda adalah Karyawan! Hanya admin yang dapat mengakses halaman ini.');
                 return null; // Tidak mengizinkan login jika bukan admin
             }
 

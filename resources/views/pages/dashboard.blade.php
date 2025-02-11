@@ -195,7 +195,8 @@
                             display: true,
                         },
                         tooltip: {
-                            enabled: false, // Matikan tooltip bawaan
+                            // Matikan tooltip bawaan
+                            enabled: false,
                             external: function(context) {
                                 let tooltipEl = document.getElementById("chart-tooltip");
                                 if (!tooltipEl) {

@@ -20,6 +20,7 @@ Route::middleware(['auth'])->group(function () {
     // Dashboard (Home)
     Route::get('home', function () {
         $tanggal = Carbon::now();
+        $today = Carbon::now()->format('Y-m-d'); // Ambil tanggal hari ini
 
         // Hitung total karyawan & kehadiran hari ini
         $totalKaryawan = User::where('role', 'karyawan')->count();
@@ -36,11 +37,17 @@ Route::middleware(['auth'])->group(function () {
         $absentDetails = [];
         $presentDetails = [];
 
+        $startOfMonth = Carbon::now()->startOfMonth();
         $daysInMonth = Carbon::now()->daysInMonth;
         $totalKaryawan = User::count();
 
-        for ($i = 1; $i <= $daysInMonth; $i++) {
-            $date = Carbon::now()->startOfMonth()->addDays($i - 1);
+        for ($i = 0; $i < $daysInMonth; $i++) {
+            $date = $startOfMonth->copy()->addDays($i);
+
+            // Cek apakah tanggal sudah berlalu atau hari ini
+            if ($date->format('Y-m-d') > $today) {
+                break; // Hentikan loop jika tanggal lebih dari hari ini
+            }
 
             // Ambil ID & nama karyawan yang hadir
             $hadir = Attendance::whereDate('created_at', $date)->with('user')->get();
