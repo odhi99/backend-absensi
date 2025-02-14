@@ -22,7 +22,8 @@ class AttendanceController extends Controller
         $attendance = new Attendance;
         $attendance->user_id = $request->user()->id;
         $attendance->date = date('Y-m-d');
-        $attendance->time_in = Carbon::now()->timezone('Asia/Jakarta')->format('H:i:s'); // Menggunakan Carbon
+        // $attendance->time_in = Carbon::now()->timezone('Asia/Jakarta')->format('H:i:s'); // Menggunakan Carbon
+        $attendance->time_in = date('H:i:s');
         $attendance->latlon_in = $request->latitude . ',' . $request->longitude;
         $attendance->save();
 
